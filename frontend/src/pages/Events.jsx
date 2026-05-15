@@ -63,7 +63,7 @@ const Events = () => {
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
       console.error('Event Error:', error);
-      const errorMsg = error.response?.data?.message || 'Error processing events.';
+      const errorMsg = error.response?.data?.message || 'Error processing event.';
       setMessage(`Error: ${errorMsg}`);
     }
   };
