@@ -1,0 +1,7 @@
+{
+  "name": "String",
+  "email": "String (Unique)",
+  "password": "String (Hashed)",
+  "role": "String (Enum: ['student', 'admin'])",
+  "createdAt": "Date"
+}

@@ -1,0 +1,9 @@
+{
+  "title": "String",
+  "subject": "String",
+  "department": "String",
+  "semester": "Number",
+  "fileUrl": "String",
+  "uploadedBy": "ObjectId (Ref: User)",
+  "createdAt": "Date"
+}
