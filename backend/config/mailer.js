@@ -1,22 +1,32 @@
-const { Resend } = require('resend');
 require('dotenv').config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
+const SENDER_EMAIL = process.env.EMAIL_USER || 'shahiiilaap@gmail.com';
 
-const sendEmail = async ({ from, to, subject, html }) => {
-  const { data, error } = await resend.emails.send({
-    from: from || 'MERITS College <onboarding@resend.dev>',
-    to: to,
-    subject: subject,
-    html: html,
+const sendEmail = async ({ to, subject, html }) => {
+  const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'api-key': BREVO_API_KEY,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      sender: { name: 'MERITS College', email: SENDER_EMAIL },
+      to: [{ email: to }],
+      subject: subject,
+      htmlContent: html,
+    }),
   });
 
-  if (error) {
-    console.error('Resend Email Error:', error);
-    throw new Error(error.message || 'Email sending failed');
+  const data = await response.json();
+
+  if (!response.ok) {
+    console.error('Brevo Email Error:', data);
+    throw new Error(data.message || 'Email sending failed');
   }
 
-  console.log('✅ Email sent successfully via Resend:', data);
+  console.log('✅ Email sent successfully via Brevo:', data);
   return data;
 };
 
