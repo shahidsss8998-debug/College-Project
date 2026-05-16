@@ -245,14 +245,15 @@ const addStudent = async (req, res) => {
       `
     };
 
-    try {
-      await transporter.sendMail(mailOptions);
-    } catch (mailError) {
-      console.error('Email sending failed:', mailError);
-      // We don't return here because the user is already created
-    }
+    // Send email in the background (no await) so the response is instant
+    transporter.sendMail(mailOptions).catch(err => {
+      console.error('Background Email Error:', err);
+    });
 
-    res.status(201).json({ message: 'Student registered successfully. Login credentials generated.' });
+    res.status(201).json({ 
+      success: true, 
+      message: 'Student registered successfully. Login credentials generated and email sending in background.' 
+    });
   } catch (error) {
     console.error('Registration Error:', error);
 
