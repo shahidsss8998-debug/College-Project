@@ -228,7 +228,7 @@ const addStudent = async (req, res) => {
               </div>
 
               <div style="text-align: center; margin-top: 30px;">
-                <a href="https://college-project-br9s.onrender.com/login" style="display: inline-block; background-color: #7B1113; color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; font-size: 14px; transition: background 0.3s ease;">
+                <a href="https://college-project-i54q.onrender.com/login" style="display: inline-block; background-color: #7B1113; color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; font-size: 14px; transition: background 0.3s ease;">
                   Login to Portal
                 </a>
               </div>
