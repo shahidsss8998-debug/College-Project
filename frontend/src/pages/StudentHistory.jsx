@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { Calendar, Check, X, Loader2 } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api';
+
 
 const StudentHistory = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +15,7 @@ const StudentHistory = () => {
     const fetchHistory = async () => {
       if (user?.id) {
         try {
-          const response = await axios.get(`${API_URL}/attendance/history/${user.id}`);
+          const response = await API.get(`/attendance/history/${user.id}`);
           // Sort by date descending
           const sortedData = response.data.sort((a, b) => b.date.localeCompare(a.date));
           setHistory(sortedData);

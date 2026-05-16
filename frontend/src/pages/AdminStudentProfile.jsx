@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from '../services/api';
 import {
   User as UserIcon, Mail, GraduationCap, MapPin,
   Phone, Hash, Briefcase, BadgeCheck, ChevronLeft,
   Calendar, Clock, AlertTriangle, FileText, Download, Building2, Check, X
 } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api';
+
 
 const AdminStudentProfile = () => {
   const { id } = useParams();
@@ -18,7 +18,7 @@ const AdminStudentProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`${API_URL}/auth/students/${id}/full-profile`);
+        const res = await API.get(`/auth/students/${id}/full-profile`);
         setData(res.data);
       } catch (error) {
         console.error('Error fetching student profile:', error);

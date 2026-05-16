@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import API from '../services/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2, Save, GraduationCap, Calendar, Clock, CheckCircle } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api';
+
 
 const AttendanceRecordDetail = () => {
   const { id } = useParams();
@@ -20,7 +20,7 @@ const AttendanceRecordDetail = () => {
 
   const fetchRecord = async () => {
     try {
-      const res = await axios.get(`${API_URL}/attendance/records/${id}`);
+      const res = await API.get(`/attendance/records/${id}`);
       setRecord(res.data);
       setStudents(res.data.students || []);
     } catch (error) {
@@ -48,7 +48,7 @@ const AttendanceRecordDetail = () => {
         periods: s.periods
       }));
 
-      await axios.put(`${API_URL}/attendance/records/${id}`, { students: payload });
+      await API.put(`/attendance/records/${id}`, { students: payload });
       setMessage('Record updated successfully!');
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
