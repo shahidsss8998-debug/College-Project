@@ -111,7 +111,7 @@ const getStudents = async (req, res) => {
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const transporter = require('../config/mailer');
+const { sendEmail } = require('../config/mailer');
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -200,7 +200,7 @@ const addStudent = async (req, res) => {
 
     // Send styled email with credentials
     const mailOptions = {
-      from: `"MERITS College Administration" <${process.env.EMAIL_USER}>`,
+      from: 'MERITS College <onboarding@resend.dev>',
       to: email,
       subject: "Your MERITS College Portal Credentials",
       html: `
@@ -246,7 +246,7 @@ const addStudent = async (req, res) => {
     };
 
     try {
-      await transporter.sendMail(mailOptions);
+      await sendEmail(mailOptions);
     } catch (mailError) {
       console.error('Email sending failed:', mailError);
     }
@@ -385,25 +385,23 @@ const getStudentFullProfile = async (req, res) => {
 
 const testEmail = async (req, res) => {
   try {
-    const mailOptions = {
-      from: `"MERITS College Administration" <${process.env.EMAIL_USER}>`,
+    await sendEmail({
+      from: 'MERITS College <onboarding@resend.dev>',
       to: process.env.EMAIL_USER,
-      subject: "MERITS College SMTP Test",
+      subject: 'MERITS College Email Test',
       html: `
         <div style="background-color: #FAFAF8; padding: 20px; font-family: sans-serif; text-align: center;">
           <div style="max-width: 400px; margin: 0 auto; background: #fff; border-radius: 8px; border: 1px solid #ddd; overflow: hidden;">
-            <div style="background-color: #7B1113; padding: 15px; color: #fff; font-weight: bold;">SMTP TEST</div>
+            <div style="background-color: #7B1113; padding: 15px; color: #fff; font-weight: bold;">EMAIL TEST</div>
             <div style="padding: 20px;">
-              <p style="color: #1B3A5C;">Nodemailer is working correctly with the MERITS theme!</p>
+              <p style="color: #1B3A5C;">Resend email is working correctly with the MERITS theme!</p>
               <div style="margin-top: 15px; font-size: 12px; color: #7B1113; font-weight: bold;">Connection Verified ✅</div>
             </div>
           </div>
         </div>
       `
-    };
-
-    await transporter.sendMail(mailOptions);
-    res.json({ message: 'Test email sent successfully' });
+    });
+    res.json({ message: 'Test email sent successfully via Resend' });
   } catch (error) {
     console.error('Test Email Error:', error);
     res.status(500).json({ message: 'Failed to send test email', error: error.message });
